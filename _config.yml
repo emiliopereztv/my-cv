@@ -1,0 +1,28 @@
+# Configuración de Jekyll para GitHub Pages
+theme: null
+plugins: []
+
+# Configuración del sitio
+title: Emilio Pérez - Currículum Profesional
+description: Currículum profesional de Emilio Rómulo Pérez Flores - Especialista en Desarrollo Web, Administración y Servicios Técnicos
+author: Emilio Rómulo Pérez Flores
+url: https://emilioperez.github.io
+
+# Configuración de compilación
+markdown: kramdown
+highlighter: rouge
+
+# Excluir archivos
+exclude:
+  - .gitignore
+  - README.md
+  - LICENSE
+  - .git
+  - .github
+
+# Incluir archivos
+include:
+  - .htaccess
+
+# Configuración de salida
+output: web
