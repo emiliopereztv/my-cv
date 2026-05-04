@@ -16,19 +16,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-if (hamburger) {
+if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
-        navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-        hamburger.classList.toggle('active');
+        const isOpen = navMenu.classList.toggle('open');
+        hamburger.classList.toggle('active', isOpen);
+        // Bloquear scroll del body cuando el menú está abierto
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 }
 
 // Cerrar menú al hacer click en un enlace
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.style.display = 'none';
+        if (navMenu) navMenu.classList.remove('open');
         if (hamburger) hamburger.classList.remove('active');
+        document.body.style.overflow = '';
     });
+});
+
+// Cerrar menú al hacer click fuera de él
+document.addEventListener('click', (e) => {
+    if (navMenu && navMenu.classList.contains('open')) {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            navMenu.classList.remove('open');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
 });
 
 // ==================== ANIMACIONES AL SCROLL ==================== 
@@ -298,3 +312,35 @@ window.addEventListener('beforeprint', () => {
 window.addEventListener('afterprint', () => {
     document.body.style.backgroundColor = '';
 });
+
+// ==================== QR MODAL ==================== 
+(function () {
+    const qrThumb  = document.getElementById('qrThumb');
+    const qrModal  = document.getElementById('qrModal');
+    const qrClose  = document.getElementById('qrModalClose');
+
+    if (!qrThumb || !qrModal) return;
+
+    function openModal() {
+        qrModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        qrModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    qrThumb.addEventListener('click', openModal);
+    qrClose.addEventListener('click', closeModal);
+
+    // Cerrar al hacer click fuera del contenido
+    qrModal.addEventListener('click', (e) => {
+        if (e.target === qrModal) closeModal();
+    });
+
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+})();

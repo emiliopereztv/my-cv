@@ -483,9 +483,11 @@
                         <div>
                             <h3>Escanea mi CV</h3>
                             <p>Accede a esta página desde tu móvil</p>
-                            <a href="https://emiliopereztv.github.io/MY-CV/" target="_blank" rel="noopener noreferrer">
-                                <img src="Qq54fEacJpuH1mb_Emilio Pérez - Currículum Profesional.jpeg" alt="QR - Currículum Emilio Pérez" class="qr-image">
-                            </a>
+                            <img src="Qq54fEacJpuH1mb_Emilio Pérez - Currículum Profesional.jpeg" 
+                                 alt="QR - Currículum Emilio Pérez" 
+                                 class="qr-image" 
+                                 id="qrThumb"
+                                 title="Toca para ampliar">
                         </div>
                     </div>
                 </div>
@@ -557,6 +559,14 @@
             <p>Diseñado y desarrollado con <i class="fas fa-heart"></i> para profesionales</p>
         </div>
     </footer>
+
+    <!-- QR Modal -->
+    <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-label="Código QR ampliado">
+        <div class="qr-modal-inner">
+            <button class="qr-modal-close" id="qrModalClose" aria-label="Cerrar">&times;</button>
+            <img src="Qq54fEacJpuH1mb_Emilio Pérez - Currículum Profesional.jpeg" alt="QR - Currículum Emilio Pérez">
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
