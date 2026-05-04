@@ -812,6 +812,24 @@ section {
     font-size: 1.3rem;
 }
 
+.qr-image {
+    display: block;
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    background: white;
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 10px;
+    border: 2px solid var(--accent-color);
+    transition: var(--transition);
+}
+
+.qr-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4);
+}
+
 /* ==================== REFERENCES SECTION ==================== */
 .references {
     background: var(--light-bg);
