@@ -655,74 +655,609 @@ section {
     font-size: 0.9rem;
 }
 
-/* ==================== SKILLS SECTION ==================== */
-.skills {
-    background: white;
-}
-
-.skills-grid {
+/* ── Layout de 2 columnas para Educación ── */
+.edu-columns {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
 }
 
-.skill-category {
-    animation: slideInUp 0.6s ease;
-}
-
-.skill-category h3 {
-    color: var(--secondary-color);
-    margin-bottom: 25px;
-    font-size: 1.3rem;
+.edu-col__title {
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--primary-color), var(--accent-color)) 1;
 }
 
-.skill-category i {
-    color: var(--primary-color);
-    font-size: 1.5rem;
+.edu-col__title i {
+    color: var(--accent-color);
+    font-size: 1.1rem;
 }
 
-.skill-items {
+/* Dentro de la columna derecha, las cards van apiladas */
+.courses-grid--col {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-top: 0;
 }
 
-.skill-item {
-    animation: slideInLeft 0.6s ease;
+.courses-grid--col .course-card {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 24px;
 }
 
-.skill-item span {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--text-dark);
-    font-weight: 600;
+.courses-grid--col .course-card i {
+    font-size: 2rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 
-.skill-bar {
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+.courses-grid--col .course-card h3 {
+    font-size: 1rem;
+    margin-bottom: 4px;
 }
 
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-    border-radius: 10px;
-    animation: fillBar 1.5s ease forwards;
-}
-
-@keyframes fillBar {
-    from {
-        width: 0;
+/* Responsive: apila columnas en pantallas pequeñas */
+@media (max-width: 768px) {
+    .edu-columns {
+        grid-template-columns: 1fr;
+        gap: 40px;
     }
 }
 
-/* ==================== CONTACT SECTION ==================== */
+
+/* Fondo de la sección con sutil gradiente */
+.skills {
+    background: linear-gradient(180deg, #ffffff 0%, #f0f4f8 100%);
+}
+
+/* Grid de tarjetas de habilidades */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+}
+
+/* ── Tarjeta individual (card) ── */
+.skill-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 102, 204, 0.12);
+    border-left: 5px solid var(--primary-color);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1),
+                box-shadow 0.35s cubic-bezier(.4,0,.2,1),
+                border-left-color 0.35s ease;
+}
+
+/* Hover de la tarjeta: elevación + borde brillante */
+.skill-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0, 102, 204, 0.18);
+    border-left-color: var(--accent-color);
+}
+
+/* Cabecera de la tarjeta (icono + título) */
+.skill-card__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.skill-card__header i {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.skill-card:hover .skill-card__header i {
+    color: var(--accent-color);
+    transform: scale(1.15);
+}
+
+.skill-card__header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0;
+}
+
+/* ── Contenedor de tags ── */
+.skill-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ── Tag individual (skill-tag) ── */
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    background: linear-gradient(135deg, #e8f0fe 0%, #f0f5ff 100%);
+    border: 1px solid rgba(0, 102, 204, 0.15);
+    border-radius: 50px;
+    cursor: default;
+    user-select: none;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Resplandor sutil detrás del tag en hover */
+.skill-tag::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 0;
+}
+
+.skill-tag:hover::before {
+    opacity: 1;
+}
+
+/* El texto se pone blanco en hover */
+.skill-tag:hover {
+    color: #ffffff;
+    border-color: transparent;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
+}
+
+/* Iconos y texto por encima del pseudo-fondo */
+.skill-tag i,
+.skill-tag {
+    position: relative;
+    z-index: 1;
+}
+
+.skill-tag i {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.skill-tag:hover i {
+    color: #ffffff;
+}
+
+/* ── Modificador especial: idioma nativo (dorado) ── */
+.skill-tag--native {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: rgba(217, 164, 6, 0.3);
+    color: #92400e;
+}
+
+.skill-tag--native i {
+    color: #d97706;
+}
+
+.skill-tag--native::before {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.skill-tag--native:hover {
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35);
+}
+
+.skill-tag--native:hover i {
+    color: #ffffff;
+}
+
+/* ── Sub-encabezado dentro de una skill-card ── */
+.skill-card__subheader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0 10px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(0,102,204,0.08), rgba(0,168,255,0.12));
+    border: 1px solid rgba(0,102,204,0.18);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.skill-card__subheader i { color: var(--primary-color); }
+
+/* AI sub-header — violeta/morado */
+.skill-card__subheader--ai {
+    background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(167,139,250,0.15));
+    border-color: rgba(139,92,246,0.25);
+    color: #5b21b6;
+}
+.skill-card__subheader--ai i { color: #7c3aed; }
+
+/* skill-tag--ai: tonos violeta */
+.skill-tag--ai {
+    background: linear-gradient(135deg, #ede9fe 0%, #f5f3ff 100%);
+    border-color: rgba(139,92,246,0.2);
+    color: #5b21b6;
+}
+.skill-tag--ai i { color: #7c3aed; }
+.skill-tag--ai::before {
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+}
+.skill-tag--ai:hover {
+    box-shadow: 0 6px 20px rgba(124,58,237,0.3);
+}
+
+/* skill-tag--wallet: tonos dorado/ámbar */
+.skill-tag--wallet {
+    background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+    border-color: rgba(217,119,6,0.2);
+    color: #92400e;
+}
+.skill-tag--wallet i { color: #d97706; }
+.skill-tag--wallet::before {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+.skill-tag--wallet:hover {
+    box-shadow: 0 6px 20px rgba(217,119,6,0.3);
+}
+
+/* ── Antivirus & Seguridad USB — rojo escarlata ── */
+.skill-card__subheader--av {
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.15));
+    border-color: rgba(239,68,68,0.28);
+    color: #b91c1c;
+}
+.skill-card__subheader--av i { color: #dc2626; }
+.skill-tag--av {
+    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+    border-color: rgba(239,68,68,0.2);
+    color: #991b1b;
+}
+.skill-tag--av i { color: #dc2626; }
+.skill-tag--av::before { background: linear-gradient(135deg, #dc2626, #f87171); }
+.skill-tag--av:hover { box-shadow: 0 6px 20px rgba(220,38,38,0.3); }
+
+/* ── Antispyware — rojo-naranja ── */
+.skill-card__subheader--spy {
+    background: linear-gradient(135deg, rgba(234,88,12,0.1), rgba(251,146,60,0.15));
+    border-color: rgba(234,88,12,0.28);
+    color: #9a3412;
+}
+.skill-card__subheader--spy i { color: #ea580c; }
+.skill-tag--spy {
+    background: linear-gradient(135deg, #ffedd5 0%, #fff7ed 100%);
+    border-color: rgba(234,88,12,0.2);
+    color: #7c2d12;
+}
+.skill-tag--spy i { color: #ea580c; }
+.skill-tag--spy::before { background: linear-gradient(135deg, #ea580c, #fb923c); }
+.skill-tag--spy:hover { box-shadow: 0 6px 20px rgba(234,88,12,0.3); }
+
+/* ── VPN — cian/teal ── */
+.skill-card__subheader--vpn {
+    background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(20,184,166,0.15));
+    border-color: rgba(6,182,212,0.28);
+    color: #0e7490;
+}
+.skill-card__subheader--vpn i { color: #06b6d4; }
+.skill-tag--vpn {
+    background: linear-gradient(135deg, #cffafe 0%, #f0fdfa 100%);
+    border-color: rgba(6,182,212,0.2);
+    color: #0c4a6e;
+}
+.skill-tag--vpn i { color: #0891b2; }
+.skill-tag--vpn::before { background: linear-gradient(135deg, #0891b2, #22d3ee); }
+.skill-tag--vpn:hover { box-shadow: 0 6px 20px rgba(6,182,212,0.3); }
+
+/* ── Grabador ISO — ámbar/fuego ── */
+.skill-card__subheader--iso {
+    background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(253,186,64,0.15));
+    border-color: rgba(245,158,11,0.28);
+    color: #92400e;
+}
+.skill-card__subheader--iso i { color: #d97706; }
+.skill-tag--iso {
+    background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+    border-color: rgba(245,158,11,0.2);
+    color: #78350f;
+}
+.skill-tag--iso i { color: #b45309; }
+.skill-tag--iso::before { background: linear-gradient(135deg, #d97706, #fbbf24); }
+.skill-tag--iso:hover { box-shadow: 0 6px 20px rgba(217,119,6,0.3); }
+
+/* ── Análisis de Almacenamiento — índigo ── */
+.skill-card__subheader--disk {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(129,140,248,0.15));
+    border-color: rgba(99,102,241,0.28);
+    color: #3730a3;
+}
+.skill-card__subheader--disk i { color: #6366f1; }
+.skill-tag--disk {
+    background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 100%);
+    border-color: rgba(99,102,241,0.2);
+    color: #312e81;
+}
+.skill-tag--disk i { color: #4f46e5; }
+.skill-tag--disk::before { background: linear-gradient(135deg, #4f46e5, #818cf8); }
+.skill-tag--disk:hover { box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
+
+/* ==================== MÉTODOS DE PAGO ==================== */
+.payment-methods {
+    background: linear-gradient(160deg, #0a0e27 0%, #003d7a 60%, #0066cc 100%);
+    color: var(--text-light);
+}
+
+.payment-methods .section-title {
+    color: #ffffff;
+}
+
+.payment-methods .section-title::after {
+    background: linear-gradient(90deg, #00a8ff, #7c3aed);
+}
+
+.payment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 30px;
+}
+
+/* Tarjeta de pago */
+.payment-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 30px 26px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.payment-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,168,255,0.2);
+    border-color: rgba(0,168,255,0.35);
+}
+
+.payment-card__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.payment-card__header i {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
+
+.payment-card__header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* Lista de info bancaria */
+.payment-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.payment-info-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.payment-info-item:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(0,168,255,0.3);
+}
+
+.payment-info-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Banco de Venezuela — rojo */
+.bank-logo.bv {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: #fff;
+}
+
+/* Banco Nacional de Crédito — azul marino */
+.bank-logo.bn {
+    background: linear-gradient(135deg, #1a3a6b, #2563eb);
+    color: #fff;
+}
+
+/* Cuenta Internacional ZINLI — dorado/azul */
+.bank-logo.zinli {
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    color: #0a0e27;
+}
+
+.payment-info-data {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.payment-info-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.payment-info-detail {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.payment-info-detail i { color: var(--accent-color); font-size: 0.8rem; }
+
+.payment-info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(0,168,255,0.15);
+    border: 1px solid rgba(0,168,255,0.3);
+    color: var(--accent-color);
+    width: fit-content;
+}
+
+/* Contenedor de los dos badges de moneda */
+.currency-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+/* VES — Bolívares: naranja cálido */
+.badge--ves {
+    background: rgba(251, 146, 60, 0.18);
+    border-color: rgba(251, 146, 60, 0.4);
+    color: #fb923c;
+}
+
+/* USD — Dólares: verde dólar */
+.badge--usd {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.35);
+    color: #4ade80;
+}
+
+/* Pastilla "INTERNACIONAL" dentro del badge USD */
+.badge-intl {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+    vertical-align: middle;
+    box-shadow: 0 0 8px rgba(34,197,94,0.4);
+    animation: pulse-intl 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-intl {
+    0%, 100% { box-shadow: 0 0 6px rgba(34,197,94,0.4); }
+    50%       { box-shadow: 0 0 14px rgba(34,197,94,0.75); }
+}
+
+/* Email de registro */
+.payment-email-notice {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,168,255,0.08);
+    border: 1px solid rgba(0,168,255,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+}
+
+.payment-email-notice i { color: var(--accent-color); }
+
+.payment-email-notice a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.payment-email-notice a:hover { color: #ffffff; text-decoration: underline; }
+
+/* Tags de exchange */
+.exchange-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.exchange-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: default;
+    border: 1px solid transparent;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    color: #fff;
+}
+
+.exchange-tag:hover {
+    transform: translateY(-3px) scale(1.06);
+    filter: brightness(1.15);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+/* Colores de marca por exchange */
+.exchange-tag--binance  { background: linear-gradient(135deg, #F0B90B, #c8960a); color: #1a1a1a; }
+.exchange-tag--bitget   { background: linear-gradient(135deg, #1DA2B4, #0e7a88); }
+.exchange-tag--bybit    { background: linear-gradient(135deg, #F7A600, #c47d00); color: #1a1a1a; }
+.exchange-tag--okx      { background: linear-gradient(135deg, #1a1a1a, #333); border-color: rgba(255,255,255,0.15); }
+.exchange-tag--mexc     { background: linear-gradient(135deg, #1FCFF1, #0fa8cc); color: #0a0e27; }
+.exchange-tag--bingx    { background: linear-gradient(135deg, #0052FF, #003acc); }
+.exchange-tag--gate     { background: linear-gradient(135deg, #3880FF, #1a5fcf); }
+.exchange-tag--airtm    { background: linear-gradient(135deg, #3BB143, #2a8230); }
+.exchange-tag--apolo    { background: linear-gradient(135deg, #EC4899, #db2777); }
+.exchange-tag--saldo    { background: linear-gradient(135deg, #8B5CF6, #6d28d9); }
+
+
 .contact {
     background: linear-gradient(135deg, var(--dark-bg) 0%, var(--secondary-color) 100%);
     color: var(--text-light);

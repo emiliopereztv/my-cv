@@ -61,36 +61,40 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observar elementos animables
-document.querySelectorAll('.experience-card, .course-card, .reference-card, .timeline-item').forEach(el => {
+document.querySelectorAll('.experience-card, .course-card, .reference-card, .timeline-item, .skill-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
 });
 
-// ==================== ANIMACIÓN DE BARRAS DE HABILIDADES ==================== 
-const skillBars = document.querySelectorAll('.skill-progress');
-let skillsAnimated = false;
+// ==================== ANIMACIÓN ESCALONADA DE SKILL-TAGS ==================== 
+let skillTagsAnimated = false;
 
-const skillsObserver = new IntersectionObserver((entries) => {
+const skillTagsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && !skillsAnimated) {
-            skillBars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0';
+        if (entry.isIntersecting && !skillTagsAnimated) {
+            // Seleccionar todos los tags dentro de la sección
+            const tags = document.querySelectorAll('.skill-tag');
+            tags.forEach((tag, index) => {
+                // Ocultar inicialmente
+                tag.style.opacity = '0';
+                tag.style.transform = 'translateY(12px) scale(0.92)';
+                // Revelar con retraso escalonado
                 setTimeout(() => {
-                    bar.style.transition = 'width 1.5s ease';
-                    bar.style.width = width;
-                }, 100);
+                    tag.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    tag.style.opacity = '1';
+                    tag.style.transform = 'translateY(0) scale(1)';
+                }, 60 * index);
             });
-            skillsAnimated = true;
+            skillTagsAnimated = true;
         }
     });
-}, { threshold: 0.5 });
+}, { threshold: 0.15 });
 
 const skillsSection = document.querySelector('.skills');
 if (skillsSection) {
-    skillsObserver.observe(skillsSection);
+    skillTagsObserver.observe(skillsSection);
 }
 
 // ==================== CONTADOR DE ESTADÍSTICAS ==================== 
