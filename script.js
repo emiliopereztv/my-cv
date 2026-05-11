@@ -48,7 +48,7 @@ document.addEventListener('click', (e) => {
 // ==================== ANIMACIONES AL SCROLL ==================== 
 const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
@@ -56,15 +56,16 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-// Observar elementos animables
+// Observar elementos animables - animación más rápida (0.3s) y permanente
 document.querySelectorAll('.experience-card, .course-card, .reference-card, .timeline-item, .skill-card').forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    el.style.transform = 'translateY(15px)';
+    el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     observer.observe(el);
 });
 
@@ -79,13 +80,13 @@ const skillTagsObserver = new IntersectionObserver((entries) => {
             tags.forEach((tag, index) => {
                 // Ocultar inicialmente
                 tag.style.opacity = '0';
-                tag.style.transform = 'translateY(12px) scale(0.92)';
-                // Revelar con retraso escalonado
+                tag.style.transform = 'translateY(10px) scale(0.95)';
+                // Revelar con retraso escalonado más rápido (0.15s)
                 setTimeout(() => {
-                    tag.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    tag.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
                     tag.style.opacity = '1';
                     tag.style.transform = 'translateY(0) scale(1)';
-                }, 60 * index);
+                }, 20 * index);
             });
             skillTagsAnimated = true;
         }
@@ -207,8 +208,9 @@ scrollTopBtn.style.cssText = `
     justify-content: center;
     font-size: 1.2rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 999;
+    animation: fadeInScale 0.25s ease;
 `;
 
 document.body.appendChild(scrollTopBtn);
@@ -229,11 +231,13 @@ scrollTopBtn.addEventListener('click', () => {
 });
 
 scrollTopBtn.addEventListener('mouseover', () => {
-    scrollTopBtn.style.transform = 'scale(1.1)';
+    scrollTopBtn.style.transform = 'scale(1.15) translateY(-5px)';
+    scrollTopBtn.style.boxShadow = '0 10px 25px rgba(0, 168, 255, 0.4)';
 });
 
 scrollTopBtn.addEventListener('mouseout', () => {
-    scrollTopBtn.style.transform = 'scale(1)';
+    scrollTopBtn.style.transform = 'scale(1) translateY(0)';
+    scrollTopBtn.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
 });
 
 // ==================== EFECTO HOVER EN CARDS ==================== 
@@ -348,3 +352,177 @@ window.addEventListener('afterprint', () => {
         if (e.key === 'Escape') closeModal();
     });
 })();
+
+// ==================== RELOJ Y FECHA ==================== 
+function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('es-ES', { hour12: false });
+    const dateString = now.toLocaleDateString('es-ES', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    document.getElementById('clock-time').textContent = timeString;
+    document.getElementById('clock-date').textContent = dateString;
+}
+
+// Actualizar cada segundo
+setInterval(updateClock, 1000);
+updateClock();
+
+// ==================== CALCULAR EDAD AUTOMÁTICA ==================== 
+function calculateAge() {
+    const birthDate = new Date('1999-10-31');
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    
+    const ageElement = document.getElementById('age-display');
+    if (ageElement) {
+        ageElement.textContent = `${age} años`;
+    }
+}
+
+// Actualizar edad cada minuto
+setInterval(calculateAge, 60000);
+calculateAge();
+
+// ==================== CAMBIO DE TEMA ==================== 
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+
+// Cargar tema guardado - solo 2 temas: 'light' o 'dark'
+const savedTheme = localStorage.getItem('theme') || 'light';
+html.setAttribute('data-theme', savedTheme);
+
+// Actualizar icono del botón
+function updateThemeIcon() {
+    const theme = html.getAttribute('data-theme');
+    const icon = themeToggle.querySelector('i');
+    if (icon) {
+        if (theme === 'dark') {
+            icon.className = 'fas fa-sun';
+        } else {
+            icon.className = 'fas fa-moon';
+        }
+    }
+}
+
+updateThemeIcon();
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon();
+});
+
+// ==================== FONDO DE RED NEURONAL ==================== 
+function createNeuralNetwork() {
+    const canvas = document.createElement('canvas');
+    canvas.className = 'neural-network';
+    document.body.insertBefore(canvas, document.body.firstChild);
+    
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let nodes = [];
+    
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+    
+    function createNode() {
+        return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5
+        };
+    }
+    
+    function initNodes() {
+        nodes = [];
+        const nodeCount = Math.floor((width * height) / 15000);
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push(createNode());
+        }
+    }
+    
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        
+        const theme = html.getAttribute('data-theme');
+        const color = theme === 'security' ? '0, 255, 65' : '0, 168, 255';
+        
+        // Dibujar nodos
+        nodes.forEach(node => {
+            node.x += node.vx;
+            node.y += node.vy;
+            
+            if (node.x < 0 || node.x > width) node.vx *= -1;
+            if (node.y < 0 || node.y > height) node.vy *= -1;
+            
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${color}, 0.8)`;
+            ctx.fill();
+        });
+        
+        // Dibujar conexiones
+        nodes.forEach((node1, i) => {
+            nodes.slice(i + 1).forEach(node2 => {
+                const dx = node1.x - node2.x;
+                const dy = node1.y - node2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(node1.x, node1.y);
+                    ctx.lineTo(node2.x, node2.y);
+                    ctx.strokeStyle = `rgba(${color}, ${1 - distance / 150})`;
+                    ctx.stroke();
+                }
+            });
+        });
+        
+        requestAnimationFrame(draw);
+    }
+    
+    window.addEventListener('resize', () => {
+        resize();
+        initNodes();
+    });
+    
+    resize();
+    initNodes();
+    draw();
+}
+
+// Crear red neuronal si no hay canvas
+if (!document.querySelector('.neural-network')) {
+    createNeuralNetwork();
+}
+
+// ==================== EFECTOS DE SEGURIDAD ==================== 
+document.querySelectorAll('.experience-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.classList.add('scanning');
+        setTimeout(() => {
+            this.classList.remove('scanning');
+            this.classList.add('unlocked');
+            setTimeout(() => this.classList.remove('unlocked'), 600);
+        }, 1500);
+    });
+});
+
+// ==================== CONSOLA DE COMANDOS ==================== 
+// La ventana de terminal se ha eliminado

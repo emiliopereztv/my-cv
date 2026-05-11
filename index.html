@@ -24,8 +24,13 @@
                 <li><a href="#actividades" class="nav-link">Actividades</a></li>
                 <li><a href="#educacion" class="nav-link">Educación</a></li>
                 <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
+                <li><a href="#software" class="nav-link">Software</a></li>
+                <li><a href="#sistemas" class="nav-link">Sistemas</a></li>
                 <li><a href="#pagos" class="nav-link">Pagos</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                    <i class="fas fa-moon"></i>
+                </button></li>
             </ul>
             <!-- Hamburger -->
             <div class="hamburger">
@@ -45,7 +50,22 @@
                 </div>
             </div>
             <h1 class="hero-title">Emilio Rómulo Pérez Flores</h1>
-            <p class="hero-subtitle">Especialista en Desarrollo Web | Administración | Servicios Técnicos | Seguridad | Trader</p>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <div class="terminal-content">
+                    <span>emilio@system:~$</span> <span id="terminal-text">Especialista en Desarrollo Web | Administración | Servicios Técnicos | Seguridad | Trader | Integridad de datos | Ciberdefensa | Seguridad informática</span><span class="terminal-cursor"></span>
+                </div>
+            </div>
+            <div class="hero-clock">
+                <div class="clock-display">
+                    <span id="clock-time">00:00:00</span>
+                    <span id="clock-date">Lunes, 11 de mayo de 2026</span>
+                </div>
+            </div>
             <div class="hero-buttons">
                 <a href="#contacto" class="btn btn-primary">Contactarme</a>
                 <a href="Currículum.pdf" download class="btn btn-secondary">
@@ -94,8 +114,12 @@
                 </div>
                 <div class="about-info">
                     <div class="info-item">
+                        <span class="info-label">Fecha de Nacimiento:</span>
+                        <span class="info-value">31/10/1999</span>
+                    </div>
+                    <div class="info-item">
                         <span class="info-label">Edad:</span>
-                        <span class="info-value">26 años</span>
+                        <span class="info-value" id="age-display">26 años</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Nacionalidad:</span>
@@ -138,9 +162,9 @@
                     </div>
                     <p class="experience-type">SERVICIO TÉCNICO</p>
                     <div class="experience-departments">
-                        <h4>Áreas de trabajo:</h4>
+                        <h4>ÁREAS DE TRABAJO:</h4>
                         <div class="dept-badges">
-                            <span class="badge">AUTOMATIZACION</span>
+                            <span class="badge">AUTOMATIZACIÓN</span>
                             <span class="badge">TECNOLOGIA DE LA INFORMACION</span>
                         </div>
                     </div>
@@ -292,7 +316,6 @@
                     <h3 class="edu-col__title"><i class="fas fa-graduation-cap"></i> Estudios Profesionales</h3>
                     <div class="education-timeline">
                         <div class="timeline-item">
-                            <div class="timeline-marker"></div>
                             <div class="timeline-content">
                                 <h3>TSU – Ingeniería en Informática</h3>
                                 <p class="institution">Aldea Universitaria « Matilde Lucia González »</p>
@@ -301,7 +324,6 @@
                         </div>
 
                         <div class="timeline-item">
-                            <div class="timeline-marker"></div>
                             <div class="timeline-content">
                                 <h3>TSU – Ciencias de la Información</h3>
                                 <p class="institution">Universidad « Andrés Eloy Blanco »</p>
@@ -310,7 +332,6 @@
                         </div>
 
                         <div class="timeline-item">
-                            <div class="timeline-marker"></div>
                             <div class="timeline-content">
                                 <h3>Aprendiz INCES - Asistente Administrativo</h3>
                                 <p class="institution">Instituto Técnico « Manuel Lissette Rodríguez »</p>
@@ -319,7 +340,6 @@
                         </div>
 
                         <div class="timeline-item">
-                            <div class="timeline-marker"></div>
                             <div class="timeline-content">
                                 <h3>Bachiller en Ciencias Sociales</h3>
                                 <p class="institution">U.E. Liceo Cocorote</p>
@@ -413,25 +433,56 @@
                     </div>
                 </article>
 
-                <!-- ── Software & Herramientas ── -->
-                <article class="skill-card" id="skill-software">
+                <!-- ── Competencias Profesionales ── -->
+                <article class="skill-card" id="skill-professional">
                     <div class="skill-card__header">
-                        <i class="fas fa-laptop-code"></i>
-                        <h3>Software &amp; Herramientas</h3>
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Competencias Profesionales</h3>
                     </div>
                     <div class="skill-card__tags">
-                        <span class="skill-tag"><i class="fas fa-file-word fa-sm"></i> Microsoft Office</span>
-                        <span class="skill-tag"><i class="fas fa-paint-brush fa-sm"></i> Photoshop CS6</span>
-                        <span class="skill-tag"><i class="fas fa-terminal fa-sm"></i> Visual Studio</span>
-                        <span class="skill-tag"><i class="fas fa-music fa-sm"></i> FL Studio 20</span>
-                        <span class="skill-tag"><i class="fas fa-film fa-sm"></i> CapCut</span>
-                        <span class="skill-tag"><i class="fas fa-server fa-sm"></i> XAMPP / Apache</span>
-                        <span class="skill-tag"><i class="fas fa-desktop fa-sm"></i> TeamViewer</span>
-                        <span class="skill-tag"><i class="fas fa-video fa-sm"></i> OBS Studio</span>
-                        <span class="skill-tag"><i class="fas fa-chart-line fa-sm"></i> TradingView</span>
-                        <span class="skill-tag"><i class="fas fa-chart-area fa-sm"></i> ProRealTime</span>
-                        <span class="skill-tag"><i class="fas fa-globe fa-sm"></i> Coinglass</span>
-                        <span class="skill-tag"><i class="fas fa-coins fa-sm"></i> SoSoValue</span>
+                        <span class="skill-tag"><i class="fas fa-tasks fa-sm"></i> Administración</span>
+                        <span class="skill-tag"><i class="fas fa-tools fa-sm"></i> Servicio Técnico</span>
+                        <span class="skill-tag"><i class="fas fa-calculator fa-sm"></i> Análisis Contable</span>
+                        <span class="skill-tag"><i class="fas fa-bullhorn fa-sm"></i> Marketing Digital</span>
+                        <span class="skill-tag"><i class="fas fa-headset fa-sm"></i> Atención al Cliente</span>
+                        <span class="skill-tag"><i class="fas fa-clipboard-check fa-sm"></i> Gestión de Inventarios</span>
+                        <span class="skill-tag"><i class="fas fa-shield-alt fa-sm"></i> Seguridad Privada</span>
+                    </div>
+                </article>
+
+                <!-- ── Idiomas ── -->
+                <article class="skill-card" id="skill-languages">
+                    <div class="skill-card__header">
+                        <i class="fas fa-globe-americas"></i>
+                        <h3>Idiomas</h3>
+                    </div>
+                    <div class="skill-card__tags">
+                        <span class="skill-tag skill-tag--native"><i class="fas fa-star fa-sm"></i> Español — Nativo</span>
+                        <span class="skill-tag"><i class="fas fa-language fa-sm"></i> Inglés — Básico Técnico</span>
+                    </div>
+                </article>
+
+            </div><!-- /.skills-grid -->
+
+        </div><!-- /.container -->
+    </section>
+
+    <!-- ===================== SOFTWARE & HERRAMIENTAS ===================== -->
+    <!-- Nueva sección para software y herramientas específicas -->
+    <section id="software" class="skills">
+        <div class="container">
+            <h2 class="section-title">Software &amp; Herramientas</h2>
+
+            <div class="skills-grid">
+
+            <!-- ── Utilidades de Sistema (separado) ── -->
+            <div class="utilities-section">
+                <article class="skill-card" id="skill-utilities">
+                    <div class="skill-card__header">
+                        <i class="fas fa-wrench"></i>
+                        <h3>Utilidades de Sistema</h3>
+                    </div>
+                    <div class="skill-card__tags">
                         <span class="skill-tag"><i class="fas fa-terminal fa-sm"></i> CMD</span>
                         <span class="skill-tag"><i class="fas fa-chevron-right fa-sm"></i> PowerShell</span>
                         <span class="skill-tag"><i class="fas fa-square-terminal fa-sm"></i> Terminal</span>
@@ -524,37 +575,32 @@
                         <span class="skill-tag skill-tag--wallet"><i class="fas fa-cube fa-sm"></i> Ergo Wallet</span>
                     </div>
                 </article>
+            </div>
 
-                <!-- ── Competencias Profesionales ── -->
-                <article class="skill-card" id="skill-professional">
+        </div><!-- /.container -->
+    </section>
+
+    <!-- ===================== SISTEMAS OPERATIVOS ===================== -->
+    <section id="sistemas" class="skills">
+        <div class="container">
+            <h2 class="section-title">Sistemas Operativos</h2>
+
+            <div class="skills-grid">
+                <!-- ── Sistemas Operativos ── -->
+                <article class="skill-card" id="skill-os">
                     <div class="skill-card__header">
-                        <i class="fas fa-briefcase"></i>
-                        <h3>Competencias Profesionales</h3>
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Sistemas Operativos</h3>
                     </div>
                     <div class="skill-card__tags">
-                        <span class="skill-tag"><i class="fas fa-tasks fa-sm"></i> Administración</span>
-                        <span class="skill-tag"><i class="fas fa-tools fa-sm"></i> Servicio Técnico</span>
-                        <span class="skill-tag"><i class="fas fa-calculator fa-sm"></i> Análisis Contable</span>
-                        <span class="skill-tag"><i class="fas fa-bullhorn fa-sm"></i> Marketing Digital</span>
-                        <span class="skill-tag"><i class="fas fa-headset fa-sm"></i> Atención al Cliente</span>
-                        <span class="skill-tag"><i class="fas fa-clipboard-check fa-sm"></i> Gestión de Inventarios</span>
-                        <span class="skill-tag"><i class="fas fa-shield-alt fa-sm"></i> Seguridad Privada</span>
+                        <span class="skill-tag"><i class="fab fa-windows fa-sm"></i> Windows</span>
+                        <span class="skill-tag"><i class="fab fa-apple fa-sm"></i> macOS</span>
+                        <span class="skill-tag"><i class="fab fa-linux fa-sm"></i> Linux</span>
+                        <span class="skill-tag"><i class="fab fa-android fa-sm"></i> Android</span>
                     </div>
                 </article>
+            </div>
 
-                <!-- ── Idiomas ── -->
-                <article class="skill-card" id="skill-languages">
-                    <div class="skill-card__header">
-                        <i class="fas fa-globe-americas"></i>
-                        <h3>Idiomas</h3>
-                    </div>
-                    <div class="skill-card__tags">
-                        <span class="skill-tag skill-tag--native"><i class="fas fa-star fa-sm"></i> Español — Nativo</span>
-                        <span class="skill-tag"><i class="fas fa-language fa-sm"></i> Inglés — Básico Técnico</span>
-                    </div>
-                </article>
-
-            </div><!-- /.skills-grid -->
         </div><!-- /.container -->
     </section>
 
@@ -646,6 +692,31 @@
                         <span class="exchange-tag exchange-tag--airtm"><i class="fas fa-paper-plane fa-sm"></i> AirTM</span>
                         <span class="exchange-tag exchange-tag--apolo"><i class="fas fa-rocket fa-sm"></i> APOLO PAY</span>
                         <span class="exchange-tag exchange-tag--saldo"><i class="fas fa-wallet fa-sm"></i> Saldo.com</span>
+                    </div>
+                </div>
+
+                <!-- ── Cuentas Virtuales ── -->
+                <div class="payment-card" id="pay-virtual">
+                    <div class="payment-card__header">
+                        <i class="fas fa-cloud"></i>
+                        <h3>Cuentas Virtuales</h3>
+                    </div>
+                    <div class="payment-info-list">
+
+                        <!-- PayPal -->
+                        <div class="payment-info-item">
+                            <div class="payment-info-logo bank-logo paypal">
+                                <i class="fab fa-paypal"></i>
+                            </div>
+                            <div class="payment-info-data">
+                                <span class="payment-info-name">PayPal</span>
+                                <span class="payment-info-detail"><i class="fas fa-envelope"></i> tradingwellofficial@gmail.com</span>
+                                <div class="currency-badges">
+                                    <span class="payment-info-badge badge--usd"><i class="fas fa-dollar-sign"></i> USD — Dólares</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
