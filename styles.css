@@ -1247,14 +1247,15 @@ section {
 }
 
 .terminal-window {
-    background: var(--bg-color);
+    background: #1e1e1e;
     border-radius: 12px;
     padding: 15px 20px;
     margin: 15px 0;
     font-family: 'Courier New', monospace;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
+    border: 1px solid #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     max-width: 800px;
+    color: #00ff00;
 }
 
 .terminal-header {
@@ -1274,17 +1275,22 @@ section {
 .terminal-dot.green { background: #27c93f; }
 
 .terminal-content {
-    color: var(--text-color);
+    color: white;
     font-size: 0.95rem;
     line-height: 1.6;
     font-weight: 500;
+}
+
+.terminal-content strong {
+    color: white;
+    font-weight: 700;
 }
 
 .terminal-cursor {
     display: inline-block;
     width: 8px;
     height: 16px;
-    background: var(--text-color);
+    background: white;
     animation: blink 1s infinite;
 }
 
@@ -1435,6 +1441,22 @@ section {
 .skill-tag--wallet:hover {
     box-shadow: 0 6px 20px rgba(217,119,6,0.3);
 }
+
+/* ── Programas Administrativos — azul oscuro ── */
+.skill-card__subheader--admin {
+    background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(29,78,216,0.15));
+    border-color: rgba(37,99,235,0.28);
+    color: #1e40af;
+}
+.skill-card__subheader--admin i { color: #2563eb; }
+.skill-tag--admin {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: rgba(37,99,235,0.2);
+    color: #1e40af;
+}
+.skill-tag--admin i { color: #2563eb; }
+.skill-tag--admin::before { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+.skill-tag--admin:hover { box-shadow: 0 6px 20px rgba(37,99,235,0.3); }
 
 /* ── Antivirus & Seguridad USB — rojo escarlata ── */
 .skill-card__subheader--av {
