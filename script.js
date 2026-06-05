@@ -1,14 +1,30 @@
 // ==================== API INFO IP ====================
 (function() {
     fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-            document.querySelector('.js-user-ip').textContent = data.ip;
-            document.querySelector('.js-user-country').textContent = data.country_name;
-            document.querySelector('.js-user-ISP').textContent = data.org;
-            document.querySelector('.js-user-ASN').textContent = data.asn;
+        .then(response => {
+            if (!response.ok) throw new Error('Respuesta no exitosa');
+            return response.json();
         })
-        .catch(err => console.error('Error al obtener IP:', err));
+        .then(data => {
+            const ipEl = document.querySelector('.js-user-ip');
+            const countryEl = document.querySelector('.js-user-country');
+            const ispEl = document.querySelector('.js-user-ISP');
+            const asnEl = document.querySelector('.js-user-ASN');
+
+            if (ipEl) ipEl.textContent = data.ip || 'N/A';
+            if (countryEl) countryEl.textContent = data.country_name || 'N/A';
+            if (ispEl) ispEl.textContent = data.org || 'N/A';
+            if (asnEl) asnEl.textContent = data.asn || 'N/A';
+        })
+        .catch(err => {
+            console.error('Error al obtener IP:', err);
+            // Mostrar texto amigable si falla
+            const elements = ['.js-user-ip', '.js-user-country', '.js-user-ISP', '.js-user-ASN'];
+            elements.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (el) el.textContent = 'No disponible';
+            });
+        });
 })();
 
 // ==================== LÓGICA DE LIKE ====================
