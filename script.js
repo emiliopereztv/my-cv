@@ -1,31 +1,38 @@
-// ==================== API INFO IP ====================
+// ==================== CONTADOR DE VISITAS REAL (Global) ====================
 (function() {
-    fetch('https://ipapi.co/json/')
-        .then(response => {
-            if (!response.ok) throw new Error('Respuesta no exitosa');
-            return response.json();
-        })
-        .then(data => {
-            const ipEl = document.querySelector('.js-user-ip');
-            const countryEl = document.querySelector('.js-user-country');
-            const ispEl = document.querySelector('.js-user-ISP');
-            const asnEl = document.querySelector('.js-user-ASN');
+    const visitEl = document.getElementById('visitCount');
+    if (!visitEl) return;
 
-            if (ipEl) ipEl.textContent = data.ip || 'N/A';
-            if (countryEl) countryEl.textContent = data.country_name || 'N/A';
-            if (ispEl) ispEl.textContent = data.org || 'N/A';
-            if (asnEl) asnEl.textContent = data.asn || 'N/A';
+    // Llamada a la API para incrementar y obtener el valor total global
+    // Este contador es único y persistente para tu sitio
+    fetch('https://api.countapi.xyz/hit/emilioperez-cv/visitas')
+        .then(response => response.json())
+        .then(data => {
+            visitEl.textContent = data.value.toLocaleString();
         })
         .catch(err => {
-            console.error('Error al obtener IP:', err);
-            // Mostrar texto amigable si falla
-            const elements = ['.js-user-ip', '.js-user-country', '.js-user-ISP', '.js-user-ASN'];
-            elements.forEach(selector => {
-                const el = document.querySelector(selector);
-                if (el) el.textContent = 'No disponible';
-            });
+            console.error('Error de carga del contador:', err);
+            visitEl.textContent = "1";
         });
 })();
+
+// ==================== OCULTAR DATOS IP ====================
+document.getElementById('hideIpBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    // Lista de elementos a ocultar (se mantienen los labels, solo se ocultan los valores)
+    const targets = ['.js-user-ip', '.js-user-ISP', '.js-user-ASN'];
+
+    targets.forEach(selector => {
+        const el = document.querySelector(selector);
+        if (el) {
+            el.textContent = '***.***.***.***';
+        }
+    });
+
+    this.textContent = 'IP Oculta';
+    this.style.background = '#0066cc';
+});
 
 // ==================== LÓGICA DE LIKE ====================
 (function() {
