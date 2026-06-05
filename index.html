@@ -48,8 +48,34 @@
                 <div class="profile-image-frame">
                     <img src="PERFIL - EMILIO PEREZ FONDO BLANCO.jpg" alt="Emilio Pérez" class="profile-image">
                 </div>
+                <!-- Cuadro de Estadísticas -->
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <i class="fas fa-eye"></i>
+                        <span>Visitas:</span>
+                        <img src="https://hits.seeyouforme.com/api/count/incr/badge.svg?url=https%3A%2F%2Femiliopereztv.github.io%2FMY-CV%2F&count_bg=%230066CC&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Visitas&edge_flat=false" alt="Hits">
+                    </div>
+                    <div class="stat-item">
+                        <button id="likeBtn" class="like-button">
+                            <i class="fas fa-heart"></i>
+                            <span id="likeCount">0</span> Likes
+                        </button>
+                    </div>
+                </div>
             </div>
             <h1 class="hero-title">Emilio Rómulo Pérez Flores</h1>
+
+            <!-- Línea de información de conexión -->
+            <ul class="header__top-info header-status-line">
+                <li>Tu IP: <b class="js-user-ip">Cargando...</b></li>
+                <li>País IP: <b class="js-user-country">Cargando...</b></li>
+                <li>ISP: <b class="js-user-ISP">Cargando...</b></li>
+                <li>ASN: <b class="js-user-ASN">Cargando...</b></li>
+                <li class="header__top-link">
+                    <a href="https://www.google.com" target="_blank" class="button-black">Oculta tu IP</a>
+                </li>
+            </ul>
+
             <div class="terminal-window">
                 <div class="terminal-header">
                     <div class="terminal-dot red"></div>
@@ -867,6 +893,20 @@
             <p>Diseñado y desarrollado con <i class="fas fa-heart"></i> para profesionales</p>
         </div>
     </footer>
+
+    <!-- Modal de Like -->
+    <div class="qr-modal" id="likeModal" role="dialog" aria-modal="true" aria-label="Validar Like">
+        <div class="qr-modal-inner">
+            <button class="qr-modal-close" id="likeModalClose" aria-label="Cerrar">&times;</button>
+            <h3>¡Gracias por tu Like!</h3>
+            <p>Ingresa tu email para verificar tu voto:</p>
+            <form action="https://formspree.io/f/xvgzvjdp" method="POST" id="likeForm">
+                <input type="email" name="email" placeholder="tu@email.com" required style="width: 100%; padding: 10px; margin: 15px 0; border-radius: 5px; border: 1px solid #ccc;">
+                <input type="hidden" name="action" value="like">
+                <button type="submit" class="btn btn-primary">Enviar Verificación</button>
+            </form>
+        </div>
+    </div>
 
     <!-- QR Modal -->
     <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-label="Código QR ampliado">

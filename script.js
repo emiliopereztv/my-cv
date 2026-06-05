@@ -1,4 +1,43 @@
-// ==================== SMOOTH SCROLL Y NAVEGACIÓN ==================== 
+// ==================== API INFO IP ====================
+(function() {
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.js-user-ip').textContent = data.ip;
+            document.querySelector('.js-user-country').textContent = data.country_name;
+            document.querySelector('.js-user-ISP').textContent = data.org;
+            document.querySelector('.js-user-ASN').textContent = data.asn;
+        })
+        .catch(err => console.error('Error al obtener IP:', err));
+})();
+
+// ==================== LÓGICA DE LIKE ====================
+(function() {
+    const likeBtn = document.getElementById('likeBtn');
+    const likeModal = document.getElementById('likeModal');
+    const likeModalClose = document.getElementById('likeModalClose');
+    const likeForm = document.getElementById('likeForm');
+
+    if (!likeBtn || !likeModal) return;
+
+    likeBtn.addEventListener('click', () => {
+        likeModal.classList.add('active');
+    });
+
+    likeModalClose.addEventListener('click', () => {
+        likeModal.classList.remove('active');
+    });
+
+    likeForm.addEventListener('submit', (e) => {
+        // Formspree maneja el envío automáticamente, solo cerramos el modal
+        setTimeout(() => {
+            likeModal.classList.remove('active');
+            alert('¡Gracias por tu Like! Se ha enviado tu verificación.');
+        }, 500);
+    });
+})();
+
+// ==================== SMOOTH SCROLL Y NAVEGACIÓN ====================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
