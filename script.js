@@ -3,8 +3,6 @@
     const visitEl = document.getElementById('visitCount');
     if (!visitEl) return;
 
-    // Llamada a la API para incrementar y obtener el valor total global
-    // Este contador es único y persistente para tu sitio
     fetch('https://api.countapi.xyz/hit/emilioperez-cv/visitas')
         .then(response => response.json())
         .then(data => {
@@ -16,22 +14,75 @@
         });
 })();
 
-// ==================== OCULTAR DATOS IP ====================
+// ==================== API INFO IP ====================
+(function() {
+    window.ipData = { ip: 'No disponible', country: 'No disponible', isp: 'No disponible', asn: 'No disponible' };
+
+    // Usamos ip-api.com que es más permisiva para GitHub Pages
+    fetch('https://ip-api.com/json/')
+        .then(response => {
+            if (!response.ok) throw new Error('Respuesta no exitosa');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                window.ipData = {
+                    ip: data.query || 'No disponible',
+                    country: data.country || 'No disponible',
+                    isp: data.isp || 'No disponible',
+                    asn: data.as || 'No disponible'
+                };
+            }
+
+            const ipEl = document.querySelector('.js-user-ip');
+            const countryEl = document.querySelector('.js-user-country');
+            const ispEl = document.querySelector('.js-user-ISP');
+            const asnEl = document.querySelector('.js-user-ASN');
+
+            if (ipEl) ipEl.textContent = window.ipData.ip;
+            if (countryEl) countryEl.textContent = window.ipData.country;
+            if (ispEl) ispEl.textContent = window.ipData.isp;
+            if (asnEl) asnEl.textContent = window.ipData.asn;
+        })
+        .catch(err => {
+            console.error('Error al obtener IP:', err);
+            const elements = ['.js-user-ip', '.js-user-country', '.js-user-ISP', '.js-user-ASN'];
+            elements.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (el) el.textContent = 'No disponible';
+            });
+        });
+})();
+
+// ==================== ALTERNAR DATOS IP ====================
 document.getElementById('hideIpBtn').addEventListener('click', function(e) {
     e.preventDefault();
 
-    // Lista de elementos a ocultar (se mantienen los labels, solo se ocultan los valores)
-    const targets = ['.js-user-ip', '.js-user-ISP', '.js-user-ASN'];
+    const ipEl = document.querySelector('.js-user-ip');
+    const ispEl = document.querySelector('.js-user-ISP');
+    const asnEl = document.querySelector('.js-user-ASN');
 
-    targets.forEach(selector => {
-        const el = document.querySelector(selector);
-        if (el) {
-            el.textContent = '***.***.***.***';
-        }
-    });
+    const isHidden = this.getAttribute('data-hidden') === 'true';
 
-    this.textContent = 'IP Oculta';
-    this.style.background = '#0066cc';
+    if (!isHidden) {
+        // Ocultar datos
+        if (ipEl) ipEl.textContent = '***.***.***.***';
+        if (ispEl) ispEl.textContent = '********';
+        if (asnEl) asnEl.textContent = '********';
+
+        this.textContent = 'Muestra IP';
+        this.setAttribute('data-hidden', 'true');
+        this.style.background = '#0066cc';
+    } else {
+        // Mostrar datos originales guardados en window.ipData
+        if (ipEl) ipEl.textContent = window.ipData.ip;
+        if (ispEl) ipEl.textContent = window.ipData.isp;
+        if (asnEl) asnEl.textContent = window.ipData.asn;
+
+        this.textContent = 'Oculta tu IP';
+        this.setAttribute('data-hidden', 'false');
+        this.style.background = '#333';
+    }
 });
 
 // ==================== LÓGICA DE LIKE ====================
@@ -74,7 +125,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ==================== NAVBAR RESPONSIVO ==================== 
+// ==================== NAVBAR RESPONSIVO ====================
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -107,7 +158,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ==================== ANIMACIONES AL SCROLL ==================== 
+// ==================== ANIMACIONES AL SCROLL ====================
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -131,7 +182,7 @@ document.querySelectorAll('.experience-card, .course-card, .reference-card, .tim
     observer.observe(el);
 });
 
-// ==================== ANIMACIÓN ESCALONADA DE SKILL-TAGS ==================== 
+// ==================== ANIMACIÓN ESCALONADA DE SKILL-TAGS ====================
 let skillTagsAnimated = false;
 
 const skillTagsObserver = new IntersectionObserver((entries) => {
@@ -160,11 +211,11 @@ if (skillsSection) {
     skillTagsObserver.observe(skillsSection);
 }
 
-// ==================== CONTADOR DE ESTADÍSTICAS ==================== 
+// ==================== CONTADOR DE ESTADÍSTICAS ====================
 function animateCounter(element, target, duration = 2000) {
     let current = 0;
     const increment = target / (duration / 16);
-    
+
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
@@ -176,7 +227,7 @@ function animateCounter(element, target, duration = 2000) {
     }, 16);
 }
 
-// ==================== EFECTO PARALLAX ==================== 
+// ==================== EFECTO PARALLAX ====================
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroBg = document.querySelector('.hero-background');
@@ -185,13 +236,13 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// ==================== VALIDACIÓN DE FORMULARIO (si se agrega) ==================== 
+// ==================== VALIDACIÓN DE FORMULARIO (si se agrega) ====================
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
 
-// ==================== COPIAR AL PORTAPAPELES ==================== 
+// ==================== COPIAR AL PORTAPAPELES ====================
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
         showNotification('Copiado al portapapeles');
@@ -216,14 +267,14 @@ function showNotification(message) {
         animation: slideInRight 0.3s ease;
     `;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideInLeft 0.3s ease reverse';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
 
-// ==================== DARK MODE TOGGLE (Opcional) ==================== 
+// ==================== DARK MODE TOGGLE (Opcional) ====================
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
@@ -234,7 +285,7 @@ if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
 }
 
-// ==================== LAZY LOADING DE IMÁGENES ==================== 
+// ==================== LAZY LOADING DE IMÁGENES ====================
 if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -250,7 +301,7 @@ if ('IntersectionObserver' in window) {
     document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
 }
 
-// ==================== SCROLL TO TOP BUTTON ==================== 
+// ==================== SCROLL TO TOP BUTTON ====================
 const scrollTopBtn = document.createElement('button');
 scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
 scrollTopBtn.className = 'scroll-top-btn';
@@ -302,24 +353,24 @@ scrollTopBtn.addEventListener('mouseout', () => {
     scrollTopBtn.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
 });
 
-// ==================== EFECTO HOVER EN CARDS ==================== 
+// ==================== EFECTO HOVER EN CARDS ====================
 document.querySelectorAll('.experience-card, .course-card, .reference-card').forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3)';
     });
-    
+
     card.addEventListener('mouseleave', function() {
         this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.08)';
     });
 });
 
-// ==================== INICIALIZACIÓN ==================== 
+// ==================== INICIALIZACIÓN ====================
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Página cargada correctamente');
-    
+
     // Agregar clase de carga
     document.body.classList.add('loaded');
-    
+
     // Inicializar tooltips si existen
     initializeTooltips();
 });
@@ -341,17 +392,17 @@ function initializeTooltips() {
                 z-index: 1000;
             `;
             document.body.appendChild(tooltip);
-            
+
             const rect = this.getBoundingClientRect();
             tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
             tooltip.style.top = (rect.top - tooltip.offsetHeight - 10) + 'px';
-            
+
             setTimeout(() => tooltip.remove(), 3000);
         });
     });
 }
 
-// ==================== PERFORMANCE OPTIMIZATION ==================== 
+// ==================== PERFORMANCE OPTIMIZATION ====================
 // Debounce para eventos de scroll
 function debounce(func, wait) {
     let timeout;
@@ -365,7 +416,7 @@ function debounce(func, wait) {
     };
 }
 
-// ==================== ANALYTICS (Opcional) ==================== 
+// ==================== ANALYTICS (Opcional) ====================
 // Rastrear clics en enlaces de redes sociales
 document.querySelectorAll('.social-links-hero a, .social-btn').forEach(link => {
     link.addEventListener('click', function() {
@@ -374,7 +425,7 @@ document.querySelectorAll('.social-links-hero a, .social-btn').forEach(link => {
     });
 });
 
-// ==================== PRINT STYLES ==================== 
+// ==================== PRINT STYLES ====================
 window.addEventListener('beforeprint', () => {
     document.body.style.backgroundColor = 'white';
 });
@@ -383,7 +434,7 @@ window.addEventListener('afterprint', () => {
     document.body.style.backgroundColor = '';
 });
 
-// ==================== QR MODAL ==================== 
+// ==================== QR MODAL ====================
 (function () {
     const qrThumb  = document.getElementById('qrThumb');
     const qrModal  = document.getElementById('qrModal');
@@ -415,17 +466,17 @@ window.addEventListener('afterprint', () => {
     });
 })();
 
-// ==================== RELOJ Y FECHA ==================== 
+// ==================== RELOJ Y FECHA ====================
 function updateClock() {
     const now = new Date();
     const timeString = now.toLocaleTimeString('es-ES', { hour12: false });
-    const dateString = now.toLocaleDateString('es-ES', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+    const dateString = now.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     });
-    
+
     document.getElementById('clock-time').textContent = timeString;
     document.getElementById('clock-date').textContent = dateString;
 }
@@ -434,17 +485,17 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// ==================== CALCULAR EDAD AUTOMÁTICA ==================== 
+// ==================== CALCULAR EDAD AUTOMÁTICA ====================
 function calculateAge() {
     const birthDate = new Date('1999-10-31');
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
     }
-    
+
     const ageElement = document.getElementById('age-display');
     if (ageElement) {
         ageElement.textContent = `${age} años`;
@@ -455,7 +506,7 @@ function calculateAge() {
 setInterval(calculateAge, 60000);
 calculateAge();
 
-// ==================== CAMBIO DE TEMA ==================== 
+// ==================== CAMBIO DE TEMA ====================
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 
@@ -481,27 +532,27 @@ updateThemeIcon();
 themeToggle.addEventListener('click', () => {
     const currentTheme = html.getAttribute('data-theme');
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
+
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateThemeIcon();
 });
 
-// ==================== FONDO DE RED NEURONAL ==================== 
+// ==================== FONDO DE RED NEURONAL ====================
 function createNeuralNetwork() {
     const canvas = document.createElement('canvas');
     canvas.className = 'neural-network';
     document.body.insertBefore(canvas, document.body.firstChild);
-    
+
     const ctx = canvas.getContext('2d');
     let width, height;
     let nodes = [];
-    
+
     function resize() {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
     }
-    
+
     function createNode() {
         return {
             x: Math.random() * width,
@@ -510,7 +561,7 @@ function createNeuralNetwork() {
             vy: (Math.random() - 0.5) * 0.5
         };
     }
-    
+
     function initNodes() {
         nodes = [];
         const nodeCount = Math.floor((width * height) / 15000);
@@ -518,34 +569,34 @@ function createNeuralNetwork() {
             nodes.push(createNode());
         }
     }
-    
+
     function draw() {
         ctx.clearRect(0, 0, width, height);
-        
+
         const theme = html.getAttribute('data-theme');
         const color = theme === 'security' ? '0, 255, 65' : '0, 168, 255';
-        
+
         // Dibujar nodos
         nodes.forEach(node => {
             node.x += node.vx;
             node.y += node.vy;
-            
+
             if (node.x < 0 || node.x > width) node.vx *= -1;
             if (node.y < 0 || node.y > height) node.vy *= -1;
-            
+
             ctx.beginPath();
             ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${color}, 0.8)`;
             ctx.fill();
         });
-        
+
         // Dibujar conexiones
         nodes.forEach((node1, i) => {
             nodes.slice(i + 1).forEach(node2 => {
                 const dx = node1.x - node2.x;
                 const dy = node1.y - node2.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                
+
                 if (distance < 150) {
                     ctx.beginPath();
                     ctx.moveTo(node1.x, node1.y);
@@ -555,15 +606,15 @@ function createNeuralNetwork() {
                 }
             });
         });
-        
+
         requestAnimationFrame(draw);
     }
-    
+
     window.addEventListener('resize', () => {
         resize();
         initNodes();
     });
-    
+
     resize();
     initNodes();
     draw();
@@ -574,7 +625,7 @@ if (!document.querySelector('.neural-network')) {
     createNeuralNetwork();
 }
 
-// ==================== EFECTOS DE SEGURIDAD ==================== 
+// ==================== EFECTOS DE SEGURIDAD ====================
 document.querySelectorAll('.experience-card').forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.classList.add('scanning');
@@ -585,6 +636,3 @@ document.querySelectorAll('.experience-card').forEach(card => {
         }, 1500);
     });
 });
-
-// ==================== CONSOLA DE COMANDOS ==================== 
-// La ventana de terminal se ha eliminado
